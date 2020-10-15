@@ -1,0 +1,18 @@
+scilla_version 0
+
+library UTO
+
+(***************************************************)
+(*             UTO contract definition             *)
+(***************************************************)
+contract UTO
+(
+    contract_owner: ByStr20,
+    name: String,
+    symbol: String,
+    decimals: Uint32,
+    init_supply: Uint128
+)
+
+(* Mutable fields *)
+field total_supply : Uint128 = init_supply
