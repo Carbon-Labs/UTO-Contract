@@ -1,6 +1,10 @@
 scilla_version 0
 
-library UTO
+(* Standard Libraries *)
+import IntUtils
+
+
+library UTOLib
 
 (***************************************************)
 (*             UTO contract definition             *)
@@ -16,3 +20,22 @@ contract UTO
 
 (* Mutable fields *)
 field total_supply : Uint128 = init_supply
+
+
+(* Procedures *)
+
+
+(* Transitions *)
+
+transition buyTokens()
+transition sellTokens()
+transition donate()
+transition mint()
+transition burn()
+
+transition createInvoice()
+transition cancelInvoice()
+transition getInvoice()
+transition payInvoice()
+transition getInvoiceAmountPaid()
+transition getInvoiceCount()
