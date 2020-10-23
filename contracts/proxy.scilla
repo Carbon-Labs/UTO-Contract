@@ -1,0 +1,45 @@
+scilla_version 0
+
+(* Proxy contract to be used by UTO *)
+
+import BoolUtils IntUtils
+
+library ProxyContract
+
+let zero = Uint128 0
+
+(***************************************************)
+(*             UTO Proxy contract definition       *)
+(***************************************************)
+
+contract ProxyContract
+(
+    contract_owner: ByStr20,
+    name :    String,
+    symbol :  String,
+    decimals : Uint32,
+    init_supply : Uint128,
+    init_implementation : ByStr20,
+    init_admin : ByStr20
+)
+with
+  (* Constraint expressions *)
+  (* Must return true or the contract will fail to deploy *)
+  let string_is_not_empty =
+    fun (s : String) =>
+      let zero = Uint32 0 in
+      let s_length = builtin strlen s in
+      let s_empty = builtin eq s_length zero in
+      negb s_empty
+  in
+  let name_ok = string_is_not_empty name in
+  let symbol_ok = string_is_not_empty symbol in
+  let name_symbol_ok = andb name_ok symbol_ok in
+  let decimals_ok =
+    let six = Uint32 6 in
+    let eighteen = Uint32 18 in
+    let decimals_at_least_6 = uint32_le six decimals in
+    let decimals_no_more_than_18 = uint32_le decimals eighteen in
+    andb decimals_at_least_6 decimals_no_more_than_18 in
+  andb name_symbol_ok decimals_ok
+=>
